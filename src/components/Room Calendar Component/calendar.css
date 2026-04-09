@@ -1,52 +1,95 @@
-/* make calendar fill the container */
-.calendar-section .rdp-root
-{
-  --rdp-accent-color: gold;
-  --rdp-accent-background-color: #342f2c;
-    --rdp-day_button-border-radius: 100%;
-    --rdp-day-button-border-color: #846757;
+/* ═══════════════════════════════════════════
+   CALENDAR — Brand-aligned date picker
+   Uses gold accent, warm surfaces
+   ═══════════════════════════════════════════ */
+
+.calendar-section .rdp-root {
+  --rdp-accent-color:            #C9A84C;
+  --rdp-accent-background-color: rgba(201, 168, 76, 0.18);
+  --rdp-day_button-border-radius: 100%;
+  --rdp-day-button-border-color: #B89868;
 }
 
-.calendar-section
-{
-  --rdp-accent-color: #846757;
-  --rdp-accent-background-color: #846757;
+.calendar-section {
+  --rdp-accent-color:            #C9A84C;
+  --rdp-accent-background-color: rgba(201, 168, 76, 0.18);
 }
 
+/* ── Calendar container ── */
 .calendar-section .rdp {
   width: 100%;
   display: flex;
   justify-content: center;
-
-
-  
-
+  color: #F5EFE6;
 }
 
-/* month container controls width */
+/* ── Month table fills container ── */
 .calendar-section .rdp-month {
   width: 100%;
-  
 }
 
-/* table expands */
 .calendar-section .rdp-table {
   width: 100%;
   table-layout: fixed;
 }
 
-/* cells distribute evenly */
 .calendar-section .rdp-cell {
   width: calc(100% / 7);
 }
 
-.calendar-section .rdp-day.rdp-disabled {
-  color: rgba(106, 2, 2, 0.467) !important;
+/* ── Day headers (Mon Tue…) ── */
+.calendar-section .rdp-head_cell,
+.calendar-section .rdp-weekday {
+  color: #C4B09A;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Nav buttons ── */
+.calendar-section .rdp-nav button,
+.calendar-section button {
+  background: none;
+  color: #F5EFE6;
+}
+
+.calendar-section .rdp-nav button:hover {
+  background: rgba(201, 168, 76, 0.15);
+  border-radius: 4px;
+}
+
+/* ── Day buttons ── */
+.calendar-section .rdp-day_button,
+.calendar-section .rdp-button {
+  color: #F5EFE6;
+}
+
+.calendar-section .rdp-day_button:hover:not(.rdp-day_selected):not(.rdp-disabled) {
+  background: rgba(201, 168, 76, 0.20);
+}
+
+/* ── Selected / range ── */
+.calendar-section .rdp-day_selected .rdp-day_button,
+.calendar-section .rdp-selected .rdp-day_button {
+  background: #C9A84C;
+  color: #fff;
+}
+
+/* ── Disabled (already booked) ── */
+.calendar-section .rdp-day.rdp-disabled,
+.calendar-section .rdp-disabled {
+  color: rgba(196, 100, 100, 0.55) !important;
   opacity: 1 !important;
   pointer-events: none;
   cursor: not-allowed;
 }
 
-.calendar-section button {
-  background: none;
+/* ── Caption (month + year label) ── */
+.calendar-section .rdp-caption_label,
+.calendar-section .rdp-month_caption {
+  color: #F5EFE6;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.125rem;
+  font-weight: 400;
 }

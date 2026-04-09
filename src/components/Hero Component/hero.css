@@ -1,44 +1,36 @@
-
-.hero{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:100vh;
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
   min-width: 100%;
-  background:url("https://picsum.photos/1200/800") center/cover no-repeat;
+  background: url("https://picsum.photos/1200/800") center/cover no-repeat;
 }
 
 .hero-overlay p {
-    font-size: 2.5rem;
-    text-align: center;
+  font-size: 2.5rem;
+  text-align: center;
 }
 
+.hero-overlay {
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.2);
 
-
-
-
-
-.hero-overlay{
-  text-align:center;
-  color:white;
-  background:rgba(0,0,0,0.2);
- 
-  padding:30px;
-  border-radius:10px;
+  padding: 30px;
+  border-radius: 10px;
   height: auto;
   width: auto;
 }
 
-@media (min-width:768px)
-{
+@media (min-width: 768px) {
   .hero-overlay p {
     font-size: 1rem;
   }
 }
 
-@media (min-width:768px){
-  .hero{
-    min-height:75vh;
+@media (min-width: 768px) {
+  .hero {
+    min-height: 75vh;
   }
 }
-

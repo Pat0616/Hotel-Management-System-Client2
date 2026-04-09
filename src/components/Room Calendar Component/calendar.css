@@ -1,0 +1,52 @@
+/* make calendar fill the container */
+.calendar-section .rdp-root
+{
+  --rdp-accent-color: gold;
+  --rdp-accent-background-color: #342f2c;
+    --rdp-day_button-border-radius: 100%;
+    --rdp-day-button-border-color: #846757;
+}
+
+.calendar-section
+{
+  --rdp-accent-color: #846757;
+  --rdp-accent-background-color: #846757;
+}
+
+.calendar-section .rdp {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+
+  
+
+}
+
+/* month container controls width */
+.calendar-section .rdp-month {
+  width: 100%;
+  
+}
+
+/* table expands */
+.calendar-section .rdp-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* cells distribute evenly */
+.calendar-section .rdp-cell {
+  width: calc(100% / 7);
+}
+
+.calendar-section .rdp-day.rdp-disabled {
+  color: rgba(106, 2, 2, 0.467) !important;
+  opacity: 1 !important;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.calendar-section button {
+  background: none;
+}

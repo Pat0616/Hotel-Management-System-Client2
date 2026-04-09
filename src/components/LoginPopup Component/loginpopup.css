@@ -1,0 +1,164 @@
+.loginpopup-background {
+    position: fixed;
+    inset: 0;
+    text-align: left;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(6px);
+
+    padding: 1rem;
+    z-index: 10;
+}
+
+
+
+/* SHARED CARD STYLE */
+.loginpopup-card,
+.loginpopup-paymentcard {
+    width: 100%;
+    max-width: 420px;
+
+    border-radius: 1.5rem;
+      background: #585141;
+
+
+    display: flex;
+    flex-direction: column;
+        gap: 0.5rem;
+
+    padding: 1.5rem;
+
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+}
+
+
+.loginpopup-paymentcard {
+    max-width: 480px;
+}
+
+/* subtle hover (optional) */
+.loginpopup-card:hover,
+.loginpopup-paymentcard:hover {
+    transform: translateY(-4px);
+}
+
+/* HEADINGS */
+.loginpopup-card p:first-child,
+.loginpopup-paymentcard p:first-child {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* LABEL TEXT */
+.loginpopup-card p,
+.loginpopup-paymentcard p {
+    font-size: 0.85rem;
+    color: white;
+    margin: 0;
+}
+
+/* INPUTS */
+.loginpopup-card input,
+.loginpopup-paymentcard input {
+    width: 100%;
+    height: 2.5rem;
+
+    border-radius: 0.6rem;
+    border: 1px solid #ddd;
+
+    padding: 0 0.8rem;
+
+    font-size: 0.9rem;
+
+    transition: all 0.2s ease;
+    background-color: #3f3b32;
+    color: white;
+}
+
+.loginpopup-card input:focus,
+
+.loginpopup-paymentcard input:focus {
+    outline: none;
+    border-color: black;
+    box-shadow: 0 0 0 2px rgba(148, 145, 2, 0.2);
+}
+
+/* BUTTONS */
+.popup-enterbutton {
+    margin-top: 0.8rem;
+    height: 2.7rem;
+    border: none;
+    border-radius: 0.7rem;
+
+    font-weight: 600;
+    cursor: pointer;
+
+    background: gold;
+    color: white;
+
+    transition: all 0.2s ease;
+}
+
+.popup-enterbutton:hover {
+    background: rgb(149, 128, 11);
+}
+
+/* SECONDARY BUTTON */
+.popup-cancelbutton {
+    background: #e5e7eb;
+    color: #333;
+}
+
+.popup-cancelbutton:hover {
+    background: #d1d5db;
+}
+
+/* CARD LOGO */
+.pathotelia-samplelogo {
+    width: 3rem;
+    height: 3rem;
+
+    background: linear-gradient(135deg, #60a5fa, #4f46e5);
+    border-radius: 0.8rem;
+
+    align-self: center;
+    margin-bottom: 0.5rem;
+}
+
+/* CREDIT CARD FLEX */
+.creditcard-details-container {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.creditcard-details-container1 {
+    flex: 1;
+}
+
+/* MOBILE STACK FIX */
+@media (max-width: 480px) {
+    .creditcard-details-container {
+        flex-direction: column;
+    }
+}
+
+
+.popupcard-headertitle
+{
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.popupcar-centeredtext
+{
+    text-align: center;
+}

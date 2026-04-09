@@ -310,4 +310,16 @@ color: #f5f5f5;
    font-size: 7rem;
 }
 
+.user-booking-status {
+    background: linear-gradient(135deg, #61ce61, #4a9d4a);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 12px;
+    font-weight: 600;
+    text-align: center;
+    border-left: 4px solid #2d7a2d;
+    box-shadow: 0 2px 8px rgba(97, 206, 97, 0.3);
+}
+
 

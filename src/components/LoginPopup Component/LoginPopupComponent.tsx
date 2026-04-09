@@ -4,14 +4,17 @@ import {useState} from 'react';
 interface Props{
 setCuStatus: (input: string) => void;
 cuStatus: string;
-loginStatus: string;
 
 InputLoginDetails: (email: string, password: string) => void;
 InputRegisterDetails: (name: string, email: string, password: string, confirmPassword: string) => void;
 InputBookingDetails: (name: string, country: string, address: string) => void;
+
+loginError: string;
+registerError: string;
+bookingError: string;
 }
 
-function LoginPopupComponent({cuStatus, setCuStatus, loginStatus, InputLoginDetails, InputRegisterDetails, InputBookingDetails}: Props){
+function LoginPopupComponent({cuStatus, setCuStatus, InputLoginDetails, InputRegisterDetails, InputBookingDetails, loginError, registerError, bookingError}: Props){
 const [LoginEmail, setLoginEmail] = useState<string>("");
 const [LoginPassword, setLoginPassword] = useState<string>("");
 
@@ -48,6 +51,7 @@ const handleBookingDetails = () => {
                     <input onChange={(e) => setLoginEmail(e.target.value)}></input>
                     <p>Password</p>
                     <input onChange={(e) => setLoginPassword(e.target.value)}></input>
+                    {loginError && <p className="error">{loginError}</p>}
                     <button onClick={handleLogin}  className='popup-enterbutton'>Login</button>
                     <button  onClick={() => setCuStatus("")} className='popup-cancelbutton'>Cancel</button>
                     <p onClick={() => setCuStatus("registering")} className='popupcar-centeredtext'>Don't have an Account? Register</p>
@@ -64,6 +68,7 @@ const handleBookingDetails = () => {
                     <input onChange={(e) => setRegisterPassword(e.target.value)}></input>
                     <p>Confirm Password</p>
                     <input onChange={(e) => setRegisterConfirmPassword(e.target.value)}></input>
+                    {registerError && <p className="error">{registerError}</p>}
                     <button onClick={handleRegister} className='popup-enterbutton'>Register</button>
                     <button onClick={() => setCuStatus("")} className='popup-cancelbutton'>Cancel</button>
                     <p onClick={() => setCuStatus("loggingIn")} className='popupcar-centeredtext'>Already have an Account? Login</p>
@@ -100,7 +105,7 @@ const handleBookingDetails = () => {
 
                      <p>Address</p>
                      <input onChange={(e) => setBookingAddress(e.target.value)}></input>
-
+                     {bookingError && <p className="error">{bookingError}</p>}
                      <button onClick={handleBookingDetails} className='popup-enterbutton'>Book</button>
                      <button onClick={() => setCuStatus("")} className='popup-cancelbutton'>Cancel</button>
              </div> }

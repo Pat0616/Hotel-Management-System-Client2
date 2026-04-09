@@ -15,3 +15,10 @@ body: JSON.stringify({ roomid, guestid, checkin_date, checkout_date }),
 });
 }
 
+export function getByRoomId(guestid: number, roomid: number) {
+return apiRequest("/api/booking/getBookingById", {
+method: "POST",
+body: JSON.stringify({ guestid, roomid }),
+});
+}
+

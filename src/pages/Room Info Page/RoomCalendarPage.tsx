@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import CalendarComponent from "../../components/Room Calendar Component/CalendarComponent";
 import LoginPopupComponent from "../../components/LoginPopup Component/LoginPopupComponent";
 import { useParams } from "react-router-dom";
-import { createBooking, getByRoomBooking } from "../../utils/bookingsAPI";
+import { createBooking, getByRoomBooking, getByRoomId } from "../../utils/bookingsAPI";
 import { getOneRoom } from "../../utils/roomsAPI";
 import { useAuth } from "../../context/AuthenticationContext";
-import { guestLogin, guestMe, guestRegister } from "../../utils/guestsAPI";
+import { guestLogin, guestRegister } from "../../utils/guestsAPI";
 
 type RoomBookings = {
     check_in_date: string,
@@ -16,7 +16,7 @@ type RoomBookings = {
 function RoomCalendarPage()
 {
 
-const { setUser } = useAuth();
+const { user, setUser } = useAuth();
 
  const { id } = useParams<{id: string}>(); //Still needs to be converted with Number(id)
  const [parentPStatus, setParentPStatus] = useState<string>("");
@@ -27,7 +27,10 @@ const { setUser } = useAuth();
  const [roomStatus, setRoomStatus] = useState<string>('');
 
 //  const [roomUrl, setRoomUrl] = useState<string>(''); when cloudinary is applied use this:
-const [loginStatus, setLoginStatus] = useState<string>("");
+const [loginError, setLoginError] = useState<string>("");
+const [registerError, setRegisterError] = useState<string>("");
+const [bookingError, setBookingError] = useState<string>("");
+const [hasBooked, setHasBooked] = useState<boolean>(false);
 
   const setPopupStatus = (input: string) => 
     {
@@ -64,26 +67,42 @@ const [loginStatus, setLoginStatus] = useState<string>("");
         }
     }
 
+    const GetUserBookings = async () => {
+        if (user && user.id) {
+            try {
+                const roomid = Number(id);
+                const res = await getByRoomId(user.id, roomid);
+                console.log("GetUserBookings response:", res);
+                
+                // Check if array has items and filter by confirmed status
+                const hasConfirmedBooking = Array.isArray(res) && res.length > 0 && 
+                    res.some((booking: any) => booking.status === "confirmed");
+                
+                setHasBooked(hasConfirmedBooking);
+            } catch (err) {
+                console.log("Error getting user bookings", err);
+                setHasBooked(false);
+            }
+        }
+    };
 
     useEffect (() => {
         GetThisRoomBookings();
         GetThisRoomInformation();
+        if (user && user.id) {
+            GetUserBookings();
+        }
     },[])
 
-//   const fakeBookings = [
-//     {
-//       check_in_date: "2026-03-16",
-//       check_out_date: "2026-03-20",
-//     },
-//     {
-//       check_in_date: "2026-04-05",
-//       check_out_date: "2026-04-08",
-//     },
-//     {
-//       check_in_date: "2026-03-03",
-//       check_out_date: "2026-03-05",
-//     },
-//   ];
+    useEffect(() => {
+        if (user) {
+            GetUserBookings();
+        } else {
+            setHasBooked(false);
+        }
+    }, [user])
+
+
 
   const [selectedRange, setSelectedRange] = useState({
     check_in_date: "",
@@ -103,58 +122,77 @@ const [loginStatus, setLoginStatus] = useState<string>("");
         console.log(reslog);
         setUser(reslog);
          setParentPStatus("paying");
+         setLoginError("");
     }
-    catch{
-        console.log("Error Logging In")
+    catch(err){
+        console.log("Error Logging In", err);
+        setLoginError("Invalid email or password.");
     }
   }
 
   const ConfirmRoomBooking = async (name: string, country: string, address: string) =>
   {
-    console.log("Booking Details", name, country, address);
-    const res = await createBooking(Number(id), 1, selectedRange.check_in_date, selectedRange.check_out_date);
-    console.log("created Booking", res);
+    if (!user) {
+        setBookingError("You must be logged in to book.");
+        return;
+    }
+    try {
+        console.log("Booking Details", name, country, address);
+        const res = await createBooking(Number(id), user.id, selectedRange.check_in_date, selectedRange.check_out_date);
+        console.log("created Booking", res);
+        setBookingError("");
+        setParentPStatus("");
+        // Refresh bookings from API
+        GetThisRoomBookings();
+        
+        // Wait a moment for backend to process, then refresh user bookings
+        setTimeout(() => {
+            GetUserBookings();
+        }, 500);
+    } catch (err) {
+        console.log("Error creating booking", err);
+        setBookingError("Booking failed. Please check dates and try again.");
+    }
   }
 
   const RegisterGuest = async (name: string, email: string, password: string, confirmPassword: string) => {
     try{
           if(password !== confirmPassword)
           {
-            alert("Passwords do not match");
+            setRegisterError("Passwords do not match.");
             return;
           }
 
           const res = await guestRegister(name, password, email);
           console.log("Registered Guest", res);
+          setUser(res);
+          setRegisterError("");
           setParentPStatus("loggingIn");
     }
     catch(err)
     {
-      console.log("Error Registering Guest");
+      console.log("Error Registering Guest", err);
+      setRegisterError("Registration failed. Email might already be in use.");
     }
   }
 
-
-
-
-  //TryBookRoom Logic
+//TryBookRoom Logic
 const TryBookRoom = async() =>
 {
-    if(true)
-    {
-        setParentPStatus('loggingIn')
-    }
-    else{
-        setParentPStatus('paying')
+    if (user) {
+        if (hasBooked) {
+            setBookingError("You have already booked this room.");
+            return;
+        }
+        setParentPStatus('paying');
+    } else {
+        setParentPStatus('loggingIn');
     }
 }
 
-
   return (
     <div className="room-page">
-
       <div className="room-container">
-
         {/* LEFT SIDE - ROOM INFO */}
         <div className="room-info">
 
@@ -176,6 +214,12 @@ const TryBookRoom = async() =>
               {roomStatus ? roomStatus : " Currently Booked"} Today
             </span>
           </p>
+
+          {hasBooked && user && (
+            <div className="user-booking-status">
+              ✓ You have already booked this room
+            </div>
+          )}
 
         </div>
 
@@ -218,13 +262,13 @@ const TryBookRoom = async() =>
           
         </p>
 
-        <button onClickCapture={TryBookRoom} className="book-btn" onClick={seeSelectedDates}>
-          Book Now
+        <button onClickCapture={TryBookRoom} className="book-btn" onClick={seeSelectedDates} disabled={hasBooked}>
+          {hasBooked ? "Already Booked" : "Book Now"}
         </button>
 
       </div>
 
-       {parentPStatus != "" && <LoginPopupComponent InputLoginDetails={LoginGuest} InputRegisterDetails={RegisterGuest} InputBookingDetails={ConfirmRoomBooking} loginStatus={loginStatus} cuStatus ={parentPStatus} setCuStatus = {setPopupStatus}></LoginPopupComponent>}
+       {parentPStatus != "" && <LoginPopupComponent InputLoginDetails={LoginGuest} InputRegisterDetails={RegisterGuest} InputBookingDetails={ConfirmRoomBooking} cuStatus ={parentPStatus} setCuStatus = {setPopupStatus} loginError={loginError} registerError={registerError} bookingError={bookingError}></LoginPopupComponent>}
 
     </div>
   )

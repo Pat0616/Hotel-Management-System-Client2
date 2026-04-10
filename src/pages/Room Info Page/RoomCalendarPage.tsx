@@ -31,6 +31,7 @@ const [loginError, setLoginError] = useState<string>("");
 const [registerError, setRegisterError] = useState<string>("");
 const [bookingError, setBookingError] = useState<string>("");
 const [hasBooked, setHasBooked] = useState<boolean>(false);
+const [userBookingDetails, setUserBookingDetails] = useState<any>(null);
 
   const setPopupStatus = (input: string) => 
     {
@@ -68,31 +69,51 @@ const [hasBooked, setHasBooked] = useState<boolean>(false);
     }
 
     const GetUserBookings = async () => {
-        if (user && user.id) {
+        if (user && user.guestid && id) {
             try {
                 const roomid = Number(id);
-                const res = await getByRoomId(user.id, roomid);
+                console.log(`Calling getByRoomId with guestid: ${user.guestid}, roomid: ${roomid}`);
+                const res = await getByRoomId(user.guestid, roomid);
                 console.log("GetUserBookings response:", res);
                 
-                // Check if array has items and filter by confirmed status
-                const hasConfirmedBooking = Array.isArray(res) && res.length > 0 && 
-                    res.some((booking: any) => booking.status === "confirmed");
-                
-                setHasBooked(hasConfirmedBooking);
+                if (Array.isArray(res) && res.length > 0) {
+                    const activeBooking = res.find((booking: any) => booking.status === "confirmed" || booking.status === "pending");
+                    if (activeBooking) {
+                        console.log("Found active booking:", activeBooking);
+                        setHasBooked(true);
+                        setUserBookingDetails(activeBooking);
+                    } else {
+                        console.log("No active bookings found. Bookings:", res);
+                        setHasBooked(false);
+                        setUserBookingDetails(null);
+                    }
+                } else {
+                    console.log("No bookings found");
+                    setHasBooked(false);
+                    setUserBookingDetails(null);
+                }
             } catch (err) {
                 console.log("Error getting user bookings", err);
                 setHasBooked(false);
+                setUserBookingDetails(null);
             }
+        } else {
+            console.log("SetHasBooked to false - user or id not available", { user, id });
+            setHasBooked(false);
+            setUserBookingDetails(null);
         }
     };
 
     useEffect (() => {
-        GetThisRoomBookings();
-        GetThisRoomInformation();
-        if (user && user.id) {
-            GetUserBookings();
+        if (id) {
+            GetThisRoomBookings();
+            GetThisRoomInformation();
+            if (user && user.id) {
+              console.log("getuserbooking is executed");
+                GetUserBookings();
+            }
         }
-    },[])
+    },[id, user?.id])
 
     useEffect(() => {
         if (user) {
@@ -138,7 +159,7 @@ const [hasBooked, setHasBooked] = useState<boolean>(false);
     }
     try {
         console.log("Booking Details", name, country, address);
-        const res = await createBooking(Number(id), user.id, selectedRange.check_in_date, selectedRange.check_out_date);
+        const res = await createBooking(Number(id), user.guestid, selectedRange.check_in_date, selectedRange.check_out_date);
         console.log("created Booking", res);
         setBookingError("");
         setParentPStatus("");
@@ -148,7 +169,7 @@ const [hasBooked, setHasBooked] = useState<boolean>(false);
         // Wait a moment for backend to process, then refresh user bookings
         setTimeout(() => {
             GetUserBookings();
-        }, 500);
+        }, 800);
     } catch (err) {
         console.log("Error creating booking", err);
         setBookingError("Booking failed. Please check dates and try again.");
@@ -215,9 +236,16 @@ const TryBookRoom = async() =>
             </span>
           </p>
 
-          {hasBooked && user && (
+          {hasBooked && user && userBookingDetails && (
             <div className="user-booking-status">
-              ✓ You have already booked this room
+              <div style={{ marginBottom: "8px" }}>
+                ✓ You have already booked this room
+              </div>
+              <div style={{ fontSize: "0.9rem", opacity: 0.9 }}>
+                <div>Check-in: {userBookingDetails.check_in_date}</div>
+                <div>Check-out: {userBookingDetails.check_out_date}</div>
+                <div>Status: <strong>{userBookingDetails.status?.toUpperCase()}</strong></div>
+              </div>
             </div>
           )}
 

@@ -1,44 +1,37 @@
-/* ═══════════════════════════════════════════
-   LOGIN / REGISTER / PAYMENT POPUP
-   Warm luxury style — aligned with brand system
-   ═══════════════════════════════════════════ */
-
 .loginpopup-background {
   position: fixed;
   inset: 0;
-  z-index: 200;
+  z-index: 220;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: rgba(30, 18, 8, 0.65);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: var(--color-overlay);
+  backdrop-filter: blur(7px);
 }
 
-/* ── Shared card ── */
 .loginpopup-card,
 .loginpopup-paymentcard {
-  width: 100%;
-  max-width: 420px;
-  background: #4a3018;
-  border-radius: 14px;
-  box-shadow: 0 24px 64px rgba(30, 18, 8, 0.4);
-  padding: 2rem 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-  animation: popup-in 220ms ease;
+  width: min(32rem, 100%);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(216, 188, 134, 0.26);
+  background:
+    linear-gradient(150deg, rgba(15, 30, 49, 0.95), rgba(23, 46, 71, 0.92)),
+    radial-gradient(circle at top right, rgba(216, 188, 134, 0.25), transparent 58%);
+  color: var(--color-text-on-dark);
+  box-shadow: 0 28px 70px rgba(4, 10, 18, 0.45);
+  padding: clamp(1rem, 4.3vw, 1.7rem);
+  animation: popup-enter 180ms ease-out;
 }
 
 .loginpopup-paymentcard {
-  max-width: 480px;
+  width: min(35rem, 100%);
 }
 
-@keyframes popup-in {
+@keyframes popup-enter {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(0.98);
+    transform: translateY(8px) scale(0.985);
   }
   to {
     opacity: 1;
@@ -46,158 +39,116 @@
   }
 }
 
-/* ── Card heading (first child p) ── */
-.loginpopup-card > p:first-child,
-.loginpopup-paymentcard > .popupcard-headertitle {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.625rem;
-  font-weight: 400;
-  color: #f5efe6;
-  margin-bottom: 0.25rem;
-  line-height: 1.2;
-}
-
-/* ── Label text ── */
-.loginpopup-card p,
-.loginpopup-paymentcard p {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: #c4b09a;
-  margin: 0;
-}
-
-/* ── Inputs ── */
-.loginpopup-card input,
-.loginpopup-paymentcard input {
-  width: 100%;
-  height: 2.75rem;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 0 0.875rem;
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 0.9375rem;
-  color: #f5efe6;
-  background: rgba(0, 0, 0, 0.2);
-  transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease;
-}
-
-.loginpopup-card input::placeholder,
-.loginpopup-paymentcard input::placeholder {
-  color: #7a6a58;
-}
-
-.loginpopup-card input:focus,
-.loginpopup-paymentcard input:focus {
-  outline: none;
-  border-color: #c9a84c;
-  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.18);
-}
-
-/* ── Primary button (Login / Register / Book) ── */
-.popup-enterbutton {
-  margin-top: 0.5rem;
-  height: 2.875rem;
-  border: none;
-  border-radius: 4px;
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 0.875rem;
+.popupcard-headertitle {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 5vw, 2.2rem);
   font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  margin-bottom: var(--space-3);
+}
+
+.popupcard-subtitle {
+  color: rgba(248, 244, 235, 0.78);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-4);
+}
+
+.popup-form-group {
+  display: grid;
+  gap: 0.36rem;
+  margin-bottom: var(--space-3);
+}
+
+.popup-form-label {
+  color: rgba(248, 244, 235, 0.82);
+  font-size: 0.77rem;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  cursor: pointer;
-  background: #c9a84c;
+}
+
+.popup-form-input {
+  width: 100%;
+  min-height: 2.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
+  padding: 0.7rem 0.84rem;
   transition:
-    background 150ms ease,
-    transform 150ms ease;
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
-.popup-enterbutton:hover {
-  background: #d4b86a;
+.popup-form-input::placeholder {
+  color: rgba(248, 244, 235, 0.55);
 }
 
-.popup-enterbutton:active {
-  background: #a88838;
-  transform: scale(0.98);
+.popup-form-input:focus {
+  outline: none;
+  border-color: rgba(216, 188, 134, 0.86);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 3px rgba(216, 188, 134, 0.22);
 }
 
-/* ── Cancel / ghost button ── */
-.popup-cancelbutton {
-  height: 2.5rem;
-  border-radius: 4px;
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  background: transparent;
-  color: #c4b09a;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  transition:
-    background 150ms ease,
-    color 150ms ease;
-}
-
-.popup-cancelbutton:hover {
-  background: rgba(0, 0, 0, 0.15);
-  color: #f5efe6;
-}
-
-/* ── Footer link text (switch between login/register) ── */
-.popupcar-centeredtext {
-  text-align: center;
-  color: #c4b09a;
-  font-size: 0.8125rem;
-  cursor: pointer;
-  transition: color 150ms ease;
-}
-
-.popupcar-centeredtext:hover {
-  color: #c9a84c;
-}
-
-/* ── Payment card header ── */
-.popupcard-headertitle {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.625rem;
-  font-weight: 400;
-  color: #f5efe6;
-  text-align: center;
-  margin-bottom: 0.25rem;
-}
-
-/* ── Credit card row ── */
 .creditcard-details-container {
-  display: flex;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
 }
 
-.creditcard-details-container1 {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.popupcard-centeredtext {
+  margin: var(--space-3) 0;
+  color: rgba(248, 244, 235, 0.66);
+  font-size: 0.78rem;
+  line-height: 1.55;
 }
 
-/* ── Mobile ── */
-@media (max-width: 480px) {
-  .loginpopup-card,
-  .loginpopup-paymentcard {
-    padding: 1.5rem 1.25rem;
-  }
+.popup-actions {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
 
+.popup-enterbutton,
+.popup-cancelbutton {
+  width: 100%;
+}
+
+.popup-helper-link {
+  margin-top: var(--space-4);
+  text-align: center;
+  color: rgba(248, 244, 235, 0.75);
+  font-size: 0.82rem;
+}
+
+.popup-helper-link button {
+  border: 0;
+  background: transparent;
+  color: var(--color-accent-300);
+  padding: 0 0 0 0.3rem;
+  font-weight: 700;
+}
+
+.popup-helper-link button:hover {
+  color: #fff;
+}
+
+.error {
+  border-radius: var(--radius-md);
+  background: rgba(184, 88, 88, 0.17);
+  border: 1px solid rgba(184, 88, 88, 0.38);
+  color: #ffc6c6;
+  font-size: 0.8rem;
+  padding: 0.58rem 0.72rem;
+  margin-top: var(--space-2);
+}
+
+@media (min-width: 650px) {
   .creditcard-details-container {
-    flex-direction: column;
+    grid-template-columns: 1fr 1fr;
   }
-}
-
-.popupcard-headertitle {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-}
-
-.popupcar-centeredtext {
-  text-align: center;
 }

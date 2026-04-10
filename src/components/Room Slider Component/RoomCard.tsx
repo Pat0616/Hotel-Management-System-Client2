@@ -5,21 +5,47 @@ type RoomCardProps = {
   room_title: string
   room_price: number
   room_url: string
+  room_description?: string
+  room_tag?: string
+  room_capacity?: string
 }
 
-const RoomCard = ({ roomid, room_title, room_price, room_url }: RoomCardProps) => {
+const RoomCard = ({
+  roomid,
+  room_title,
+  room_price,
+  room_url,
+  room_description,
+  room_tag,
+  room_capacity,
+}: RoomCardProps) => {
+  const formattedPrice = new Intl.NumberFormat('en-US').format(room_price)
+  const safeImageUrl = room_url || `https://picsum.photos/640/420?room-${roomid}`
+
   return (
     <article className="room-card">
-      <img src={room_url} alt={room_title} />
+      <div className="room-card-media">
+        <img src={safeImageUrl} alt={room_title} />
+        <span className="room-card-badge">{room_tag || 'Signature Suite'}</span>
+      </div>
 
-      <div className="room-info">
-        <h3>{room_title}</h3>
-        <p>${room_price} / Night</p>
+      <div className="room-card-body">
+        <h4>{room_title}</h4>
+        <p className="room-card-copy">
+          {room_description || 'Enjoy elevated comfort with curated amenities and modern coastal interiors.'}
+        </p>
+        <div className="room-card-meta">
+          <span className="room-card-chip">{room_capacity || '2 Guests'}</span>
+          <span className="room-card-chip">Breakfast Included</span>
+        </div>
       </div>
 
       <div className="room-card-footer">
-        <Link to={`/room/${roomid}`} className="room-card-select-btn">
-          Select
+        <p className="room-card-price">
+          <strong>${formattedPrice}</strong> / night
+        </p>
+        <Link to={`/room/${roomid}`} className="btn btn-primary room-card-select-btn">
+          View Room
         </Link>
       </div>
     </article>

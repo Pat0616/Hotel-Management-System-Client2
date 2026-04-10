@@ -1,95 +1,82 @@
-/* ═══════════════════════════════════════════
-   CALENDAR — Brand-aligned date picker
-   Uses gold accent, warm surfaces
-   ═══════════════════════════════════════════ */
-
-.calendar-section .rdp-root {
-  --rdp-accent-color:            #C9A84C;
-  --rdp-accent-background-color: rgba(201, 168, 76, 0.18);
-  --rdp-day_button-border-radius: 100%;
-  --rdp-day-button-border-color: #B89868;
+.booking-calendar {
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(20, 38, 61, 0.14);
+  background: #fff;
+  padding: 0.82rem;
 }
 
-.calendar-section {
-  --rdp-accent-color:            #C9A84C;
-  --rdp-accent-background-color: rgba(201, 168, 76, 0.18);
+.booking-calendar .rdp-root {
+  --rdp-accent-color: var(--color-accent-600);
+  --rdp-accent-background-color: rgba(216, 188, 134, 0.3);
+  --rdp-day_button-border-radius: 12px;
+  --rdp-day-width: 2.2rem;
+  --rdp-day-height: 2.2rem;
+  --rdp-day_button-width: 2.2rem;
+  --rdp-day_button-height: 2.2rem;
 }
 
-/* ── Calendar container ── */
-.calendar-section .rdp {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  color: #F5EFE6;
+.booking-calendar .rdp {
+  color: var(--color-primary-900);
+  margin: 0;
 }
 
-/* ── Month table fills container ── */
-.calendar-section .rdp-month {
+.booking-calendar .rdp-month {
   width: 100%;
 }
 
-.calendar-section .rdp-table {
+.booking-calendar .rdp-table {
   width: 100%;
-  table-layout: fixed;
+  max-width: none;
 }
 
-.calendar-section .rdp-cell {
-  width: calc(100% / 7);
-}
-
-/* ── Day headers (Mon Tue…) ── */
-.calendar-section .rdp-head_cell,
-.calendar-section .rdp-weekday {
-  color: #C4B09A;
-  font-size: 0.75rem;
-  font-weight: 600;
+.booking-calendar .rdp-weekday,
+.booking-calendar .rdp-head_cell {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--color-text-500);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 
-/* ── Nav buttons ── */
-.calendar-section .rdp-nav button,
-.calendar-section button {
-  background: none;
-  color: #F5EFE6;
+.booking-calendar .rdp-day_button {
+  border: 1px solid transparent;
+  font-weight: 700;
+  color: var(--color-primary-900);
 }
 
-.calendar-section .rdp-nav button:hover {
-  background: rgba(201, 168, 76, 0.15);
-  border-radius: 4px;
+.booking-calendar .rdp-day_button:hover:not(.rdp-day_selected):not(.rdp-disabled) {
+  background: rgba(216, 188, 134, 0.26);
+  border-color: rgba(192, 154, 91, 0.55);
 }
 
-/* ── Day buttons ── */
-.calendar-section .rdp-day_button,
-.calendar-section .rdp-button {
-  color: #F5EFE6;
-}
-
-.calendar-section .rdp-day_button:hover:not(.rdp-day_selected):not(.rdp-disabled) {
-  background: rgba(201, 168, 76, 0.20);
-}
-
-/* ── Selected / range ── */
-.calendar-section .rdp-day_selected .rdp-day_button,
-.calendar-section .rdp-selected .rdp-day_button {
-  background: #C9A84C;
+.booking-calendar .rdp-day_selected .rdp-day_button,
+.booking-calendar .rdp-selected .rdp-day_button {
   color: #fff;
 }
 
-/* ── Disabled (already booked) ── */
-.calendar-section .rdp-day.rdp-disabled,
-.calendar-section .rdp-disabled {
-  color: rgba(196, 100, 100, 0.55) !important;
-  opacity: 1 !important;
-  pointer-events: none;
-  cursor: not-allowed;
+.booking-calendar .rdp-day_range_middle .rdp-day_button {
+  background: rgba(216, 188, 134, 0.32);
+  color: var(--color-primary-900);
 }
 
-/* ── Caption (month + year label) ── */
-.calendar-section .rdp-caption_label,
-.calendar-section .rdp-month_caption {
-  color: #F5EFE6;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.125rem;
-  font-weight: 400;
+.booking-calendar .rdp-button[disabled],
+.booking-calendar .rdp-disabled {
+  color: rgba(101, 116, 135, 0.52);
+  text-decoration: line-through;
+}
+
+.booking-calendar .rdp-caption_label {
+  color: var(--color-primary-900);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.booking-calendar .rdp-nav_button {
+  border-radius: 10px;
+}
+
+.booking-calendar .rdp-nav_button:hover {
+  background: rgba(216, 188, 134, 0.22);
 }

@@ -7,17 +7,28 @@ type Room = {
   room_title: string
   room_price: number
   room_url: string
+  room_description?: string
+  room_tag?: string
+  room_capacity?: string
 }
 
 type Props = {
   category: string
   rooms: Room[]
+  description?: string
 }
 
-const RoomSlider = ({ category, rooms }: Props) => {
+const RoomSlider = ({ category, rooms, description }: Props) => {
+  if (!rooms.length) {
+    return null
+  }
+
   return (
     <section className="slider-section">
-      <h2>{category}</h2>
+      <div className="slider-head">
+        <h3>{category}</h3>
+        {description ? <p>{description}</p> : null}
+      </div>
 
       <div className="slider">
         {rooms.map((room) => (

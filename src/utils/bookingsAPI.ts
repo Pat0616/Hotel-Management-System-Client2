@@ -8,10 +8,10 @@ body: JSON.stringify({ roomid }),
 }
 
 
-export function createBooking(roomid: number, guestid: number, checkin_date: string, checkout_date: string) {
+export function createBooking(roomid: number, guestid: number, checkin_date: string, checkout_date: string, fullname: string, country: string, address: string) {
 return apiRequest("/api/booking/create", {
 method: "POST",
-body: JSON.stringify({ roomid, guestid, checkin_date, checkout_date }),
+body: JSON.stringify({ roomid, guestid, checkin_date, checkout_date, fullname, country, address }),
 });
 }
 

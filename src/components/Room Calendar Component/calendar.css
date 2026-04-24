@@ -7,10 +7,10 @@
 
 .booking-calendar .rdp-root {
   --rdp-accent-color: var(--color-accent-600);
-  --rdp-accent-background-color: rgba(216, 188, 134, 0.3);
+  --rdp-accent-background-color: rgba(104, 80, 31, 0.7);
   --rdp-day_button-border-radius: 12px;
-  --rdp-day-width: 2.2rem;
-  --rdp-day-height: 2.2rem;
+  --rdp-day-width: 3.7rem;
+  --rdp-day-height: 3.2rem;
   --rdp-day_button-width: 2.2rem;
   --rdp-day_button-height: 2.2rem;
 }
@@ -18,6 +18,13 @@
 .booking-calendar .rdp {
   color: var(--color-primary-900);
   margin: 0;
+}
+
+.booking-calendar .rdp-root {
+  display: flex;
+  justify-content: center;
+ margin: 0px;
+ 
 }
 
 .booking-calendar .rdp-month {

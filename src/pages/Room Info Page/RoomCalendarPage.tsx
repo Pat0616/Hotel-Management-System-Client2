@@ -45,6 +45,9 @@ function RoomCalendarPage() {
   const [calendarError, setCalendarError] = useState<string>("");
   const [hasBooked, setHasBooked] = useState<boolean>(false);
   const [userBookingDetails, setUserBookingDetails] = useState<BookingSummary | null>(null);
+  const [autoLoginCounter, setAutoLoginCounter] = useState<number>(0);
+
+
 
   const [selectedRange, setSelectedRange] = useState({
     check_in_date: "",
@@ -78,7 +81,7 @@ function RoomCalendarPage() {
       const res = await getByRoomId(user.guestid, roomId);
       const reservations = Array.isArray(res) ? res : [];
       const activeBooking = reservations.find(
-        (booking: { status?: string }) => booking.status === "confirmed" || booking.status === "pending",
+        (booking: { status?: string }) => booking.status === "confirmed" || booking.status === "pending" || booking.status === "checked in",
       );
 
       if (activeBooking) {
@@ -192,11 +195,29 @@ function RoomCalendarPage() {
     };
   }, [roomId, user?.guestid]);
 
+
+ useEffect (() => 
+    {
+        TryLoginPastAccount();
+
+        setAutoLoginCounter((prev) => prev + 1);
+  
+    },[])
+
+    useEffect (()=> {
+      GetUserBookings();
+    },[autoLoginCounter])
+
+
+
   const LoginGuest = async (email: string, password: string) => {
     try {
       setLoginError("");
       const loggedInUser = await guestLogin(email, password);
       setUser(loggedInUser);
+
+        localStorage.setItem("GuestUsername", JSON.stringify(email));
+        localStorage.setItem("GuestPassword", JSON.stringify(password));
       setPopupStatus("paying");
     } catch {
       setLoginError("Invalid email or password.");
@@ -218,7 +239,7 @@ function RoomCalendarPage() {
     }
   };
 
-  const ConfirmRoomBooking = async () => {
+  const ConfirmRoomBooking = async (fullname: string, country: string, address: string) => {
     if (!user?.guestid) {
       setBookingError("You must be logged in to continue.");
       return;
@@ -230,7 +251,7 @@ function RoomCalendarPage() {
     }
 
     try {
-      await createBooking(roomId, user.guestid, selectedRange.check_in_date, selectedRange.check_out_date);
+      await createBooking(roomId, user.guestid, selectedRange.check_in_date, selectedRange.check_out_date, fullname, country, address);
       setBookingError("");
       setPopupStatus("");
       await GetThisRoomBookings();
@@ -264,6 +285,40 @@ function RoomCalendarPage() {
       setPopupStatus("loggingIn");
     }
   };
+
+  const TryLoginPastAccount = async() =>
+{
+  try{
+      const remuser = localStorage.getItem("GuestUsername");
+      const rempass = localStorage.getItem("GuestPassword");
+
+    if(remuser && rempass)
+    {
+      const email = JSON.parse(remuser);
+      const password = JSON.parse(rempass);
+      const res = await guestLogin(email, password);
+      setUser(res);
+      console.log("Auto-login result", res);
+    }
+
+   
+  }
+  catch(err)
+  {
+    console.log("Error with past account login", err);
+  }
+    
+}
+
+const DeleteStoragePastAccount = () =>
+{
+  localStorage.removeItem("GuestUsername");
+  localStorage.removeItem("GuestPassword");
+
+  window.location.href="/room/" + id; // Refresh page to reset state after deleting storage
+}
+
+
 
   const roomImage = roomDetails.room_url || "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80";
   const statusClass = roomDetails.room_availability === "Available" ? "status-pill available" : "status-pill unavailable";

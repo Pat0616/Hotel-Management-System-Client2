@@ -9,7 +9,7 @@ type Room = {
   room_url: string
   room_description?: string
   room_tag?: string
-  room_capacity?: string
+  room_capacity?: number
 }
 
 type Props = {

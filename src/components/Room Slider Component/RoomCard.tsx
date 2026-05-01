@@ -7,7 +7,7 @@ type RoomCardProps = {
   room_url: string
   room_description?: string
   room_tag?: string
-  room_capacity?: string
+  room_capacity?: number
 }
 
 const RoomCard = ({
@@ -35,8 +35,8 @@ const RoomCard = ({
           {room_description || 'Enjoy elevated comfort with curated amenities and modern coastal interiors.'}
         </p>
         <div className="room-card-meta">
-          <span className="room-card-chip">{room_capacity || '2 Guests'}</span>
-          <span className="room-card-chip">Breakfast Included</span>
+          <span className="room-card-chip">{room_capacity} Guests</span>
+          <span className="room-card-chip">Dinner Included</span>
         </div>
       </div>
 

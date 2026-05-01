@@ -22,3 +22,18 @@ body: JSON.stringify({ guestid, roomid }),
 });
 }
 
+
+export function getBookingsByGuest(guestid: number){
+return apiRequest("/api/booking/getbyguest", {
+method: "POST",
+body: JSON.stringify({ guestid }),
+});
+}
+
+export function massUpdateBooking(){
+return apiRequest("/api/booking/alldata", {
+method: "PATCH",
+body: JSON.stringify({}),
+});
+}
+

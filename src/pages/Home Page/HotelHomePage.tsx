@@ -1,101 +1,102 @@
 import Hero from '../../components/Hero Component/HeroComponent'
 import RoomSlider from '../../components/Room Slider Component/RoomSliders'
 import LoginPopupComponent from '../../components/LoginPopup Component/LoginPopupComponent'
+import BookingsPopupComponent from '../../components/BookingsPopup Component/BookingsPopupComponent'
 import { useState, useEffect } from 'react'
 import { getRoomCard } from '../../utils/roomsAPI'
-import { guestLogin, guestRegister } from '../../utils/guestsAPI'
+import { guestLogin, guestRegister, guestLogout } from '../../utils/guestsAPI'
 import { useAuth } from '../../context/AuthContext'
 import { Link } from 'react-router-dom'
 
-const standardRooms = [
-  {
-    roomid: 1,
-    room_title: 'Signature Queen Room',
-    room_price: 180,
-    room_url: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80',
-    room_description: 'Soft neutral palette, work nook, and a private lounge chair for restorative stays.',
-    room_tag: 'Classic',
-    room_capacity: '2 Guests',
-  },
-  {
-    roomid: 2,
-    room_title: 'Garden View Retreat',
-    room_price: 195,
-    room_url: 'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?auto=format&fit=crop&w=1200&q=80',
-    room_description: 'Morning light and curated interiors designed for relaxed weekend escapes.',
-    room_tag: 'Nature View',
-    room_capacity: '2 Guests',
-  },
-  {
-    roomid: 3,
-    room_title: 'Business Comfort Suite',
-    room_price: 210,
-    room_url: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=80',
-    room_description: 'A calm layout with high-speed connectivity and ergonomic workspace.',
-    room_tag: 'Executive',
-    room_capacity: '2 Guests',
-  },
-]
+// const standardRooms = [
+//   {
+//     roomid: 1,
+//     room_title: 'Signature Queen Room',
+//     room_price: 180,
+//     room_url: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80',
+//     room_description: 'Soft neutral palette, work nook, and a private lounge chair for restorative stays.',
+//     room_tag: 'Classic',
+//     room_capacity: '2 Guests',
+//   },
+//   {
+//     roomid: 2,
+//     room_title: 'Garden View Retreat',
+//     room_price: 195,
+//     room_url: 'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?auto=format&fit=crop&w=1200&q=80',
+//     room_description: 'Morning light and curated interiors designed for relaxed weekend escapes.',
+//     room_tag: 'Nature View',
+//     room_capacity: '2 Guests',
+//   },
+//   {
+//     roomid: 3,
+//     room_title: 'Business Comfort Suite',
+//     room_price: 210,
+//     room_url: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=80',
+//     room_description: 'A calm layout with high-speed connectivity and ergonomic workspace.',
+//     room_tag: 'Executive',
+//     room_capacity: '2 Guests',
+//   },
+// ]
 
-const premiumRooms = [
-  {
-    roomid: 7,
-    room_title: 'Coastal Premium Suite',
-    room_price: 280,
-    room_url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
-    room_description: 'Open-plan premium suite with deep-soak bath and private dining alcove.',
-    room_tag: 'Premium',
-    room_capacity: '3 Guests',
-  },
-  {
-    roomid: 8,
-    room_title: 'Skyline King Residence',
-    room_price: 320,
-    room_url: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
-    room_description: 'Floor-to-ceiling glazing and tailored lighting for evenings in comfort.',
-    room_tag: 'Skyline',
-    room_capacity: '3 Guests',
-  },
-  {
-    roomid: 9,
-    room_title: 'Panoramic Harbor Suite',
-    room_price: 350,
-    room_url: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?auto=format&fit=crop&w=1200&q=80',
-    room_description: 'Statement living space ideal for longer stays and special occasions.',
-    room_tag: 'Panoramic',
-    room_capacity: '4 Guests',
-  },
-]
+// const premiumRooms = [
+//   {
+//     roomid: 7,
+//     room_title: 'Coastal Premium Suite',
+//     room_price: 280,
+//     room_url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+//     room_description: 'Open-plan premium suite with deep-soak bath and private dining alcove.',
+//     room_tag: 'Premium',
+//     room_capacity: '3 Guests',
+//   },
+//   {
+//     roomid: 8,
+//     room_title: 'Skyline King Residence',
+//     room_price: 320,
+//     room_url: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
+//     room_description: 'Floor-to-ceiling glazing and tailored lighting for evenings in comfort.',
+//     room_tag: 'Skyline',
+//     room_capacity: '3 Guests',
+//   },
+//   {
+//     roomid: 9,
+//     room_title: 'Panoramic Harbor Suite',
+//     room_price: 350,
+//     room_url: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?auto=format&fit=crop&w=1200&q=80',
+//     room_description: 'Statement living space ideal for longer stays and special occasions.',
+//     room_tag: 'Panoramic',
+//     room_capacity: '4 Guests',
+//   },
+// ]
 
-const deluxeRooms = [
-  {
-    roomid: 13,
-    room_title: 'Presidential Ocean Loft',
-    room_price: 460,
-    room_url: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80',
-    room_description: 'High-floor suite with dedicated lounge, skyline deck, and butler-ready layout.',
-    room_tag: 'Deluxe',
-    room_capacity: '4 Guests',
-  },
-  {
-    roomid: 14,
-    room_title: 'Royal Wellness Suite',
-    room_price: 520,
-    room_url: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80',
-    room_description: 'Private wellness corner, calming textures, and handcrafted finishing details.',
-    room_tag: 'Wellness',
-    room_capacity: '4 Guests',
-  },
-  {
-    roomid: 15,
-    room_title: 'Grand Penthouse Collection',
-    room_price: 620,
-    room_url: 'https://images.unsplash.com/photo-1631049035331-f0e1f98f6404?auto=format&fit=crop&w=1200&q=80',
-    room_description: 'Our most exclusive residence with curated art, terrace views, and chef service.',
-    room_tag: 'Penthouse',
-    room_capacity: '5 Guests',
-  },
-]
+// const deluxeRooms = [
+//   {
+//     roomid: 13,
+//     room_title: 'Presidential Ocean Loft',
+//     room_price: 460,
+//     room_url: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80',
+//     room_description: 'High-floor suite with dedicated lounge, skyline deck, and butler-ready layout.',
+//     room_tag: 'Deluxe',
+//     room_capacity: '4 Guests',
+//   },
+//   {
+//     roomid: 14,
+//     room_title: 'Royal Wellness Suite',
+//     room_price: 520,
+//     room_url: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80',
+//     room_description: 'Private wellness corner, calming textures, and handcrafted finishing details.',
+//     room_tag: 'Wellness',
+//     room_capacity: '4 Guests',
+//   },
+//   {
+//     roomid: 15,
+//     room_title: 'Grand Penthouse Collection',
+//     room_price: 620,
+//     room_url: 'https://images.unsplash.com/photo-1631049035331-f0e1f98f6404?auto=format&fit=crop&w=1200&q=80',
+//     room_description: 'Our most exclusive residence with curated art, terrace views, and chef service.',
+//     room_tag: 'Penthouse',
+//     room_capacity: '5 Guests',
+//   },
+// ]
 
 type RoomCardDetails = {
   roomid: number
@@ -104,15 +105,23 @@ type RoomCardDetails = {
   room_url: string
   room_description?: string
   room_tag?: string
-  room_capacity?: string
+  room_capacity?: number
 }
 
 function HotelHomePage() {
   const { user, setUser } = useAuth()
   const [roomCardDetailsSamp, setRoomCardDetailsSamp] = useState<RoomCardDetails[]>([])
+
+  const [roomCardSingleBeds, setRoomCardSingleBeds] = useState<RoomCardDetails[]>([])
+  const [roomCardDoubleBeds, setRoomCardDoubleBeds] = useState<RoomCardDetails[]>([])
+  const [roomCardSuites, setRoomCardSuites] = useState<RoomCardDetails[]>([])
+  const [roomCardDeluxe, setRoomCardDeluxe] = useState<RoomCardDetails[]>([])
+
+
   const [popupStatus, setPopupStatus] = useState<string>('')
   const [loginError, setLoginError] = useState<string>('')
   const [registerError, setRegisterError] = useState<string>('')
+  const [bookingsPopupStatus, setBookingsPopupStatus] = useState<string>('')
 
   const normalizeFeaturedRooms = (rooms: unknown): RoomCardDetails[] => {
     if (!Array.isArray(rooms)) {
@@ -128,29 +137,49 @@ function HotelHomePage() {
         room.room_description ||
         'A thoughtfully designed featured stay with elevated comfort and hospitality.',
       room_tag: room.room_tag || 'Featured',
-      room_capacity: room.room_capacity || '2 Guests',
+      room_capacity: room.room_capacity,
     }))
   }
 
   useEffect(() => {
-    let isMounted = true
+  let isMounted = true;
 
-    getRoomCard('Single')
-      .then((res) => {
-        if (isMounted) {
-          setRoomCardDetailsSamp(normalizeFeaturedRooms(res))
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setRoomCardDetailsSamp([])
-        }
-      })
+  const fetchRooms = async () => {
+    try {
+      const [single, double, suite, deluxe] = await Promise.all([
+        getRoomCard('Single'),
+        getRoomCard('Double'),
+        getRoomCard('Suite'),
+        getRoomCard('Deluxe'),
+      ]);
 
-    return () => {
-      isMounted = false
+      if (!isMounted) return;
+
+      setRoomCardSingleBeds(normalizeFeaturedRooms(single));
+      setRoomCardDoubleBeds(normalizeFeaturedRooms(double));
+      setRoomCardSuites(normalizeFeaturedRooms(suite));
+      setRoomCardDeluxe(normalizeFeaturedRooms(deluxe));
+    } catch (err) {
+      if (!isMounted) return;
+
+      console.log("Failed to load rooms from Home");
+
+      // fallback to empty arrays if needed
+      setRoomCardSingleBeds([]);
+      setRoomCardDoubleBeds([]);
+      setRoomCardSuites([]);
+      setRoomCardDeluxe([]);
     }
-  }, [])
+  };
+
+
+
+  fetchRooms();
+
+  return () => {
+    isMounted = false;
+  };
+}, []);
 
   const handleLogin = async (email: string, password: string) => {
     try {
@@ -181,6 +210,19 @@ function HotelHomePage() {
     setPopupStatus('')
   }
 
+  const handleSignOut = async () => {
+    try {
+      await guestLogout()
+      setUser(null)
+    } catch {
+      // Handle error if needed
+    }
+  }
+
+  const handleMyBookings = () => {
+    setBookingsPopupStatus('viewing')
+  }
+
   const guestFirstName = (user?.guest || user?.name || 'Guest').toString().split(' ')[0]
 
   return (
@@ -191,7 +233,9 @@ function HotelHomePage() {
           setRegisterError('')
           setPopupStatus('loggingIn')
         }}
-        guestName={user?.guest || user?.name}
+        onSignOutClick={handleSignOut}
+        onMyBookingsClick={handleMyBookings}
+        user={user}
       />
 
       {user && (
@@ -225,28 +269,32 @@ function HotelHomePage() {
           </p>
         </header>
 
+        
         <RoomSlider
-          category="Classic Collection"
-          description="Elegant essentials crafted for focused business trips and weekend escapes."
-          rooms={standardRooms}
-        />
-        <RoomSlider
-          category="Premium Suites"
-          description="Upgraded spaces with enhanced views, larger layouts, and premium amenities."
-          rooms={premiumRooms}
-        />
-        <RoomSlider
-          category="Deluxe Residences"
-          description="Our most refined suites for signature stays, celebrations, and luxury retreats."
-          rooms={deluxeRooms}
-        />
-        <RoomSlider
-          category="Featured From Live Inventory"
+          category="Single Bedrooms"
           description="Real-time featured rooms from your backend feed."
-          rooms={roomCardDetailsSamp}
+          rooms={roomCardSingleBeds}
         />
 
-        {!roomCardDetailsSamp.length && (
+        <RoomSlider
+          category="Double Bedrooms"
+          description="Real-time featured rooms from your backend feed."
+          rooms={roomCardDoubleBeds}
+        />
+
+        <RoomSlider
+          category="Suite Bedrooms"
+          description="Real-time featured rooms from your backend feed."
+          rooms={roomCardSuites}
+        />
+
+        <RoomSlider
+          category="Deluxe Bedrooms"
+          description="Real-time featured rooms from your backend feed."
+          rooms={roomCardDeluxe}
+        />
+
+        {!roomCardSingleBeds.length && (
           <div className="empty-state">
             Featured inventory is currently unavailable. Curated collections remain open for booking.
           </div>
@@ -269,6 +317,13 @@ function HotelHomePage() {
           loginError={loginError}
           registerError={registerError}
           bookingError=""
+        />
+      )}
+
+      {bookingsPopupStatus !== '' && (
+        <BookingsPopupComponent
+          bookingsPopupStatus={bookingsPopupStatus}
+          setBookingsPopupStatus={setBookingsPopupStatus}
         />
       )}
     </main>

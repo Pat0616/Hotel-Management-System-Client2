@@ -1,13 +1,16 @@
 import './hero.css'
 import { Link } from 'react-router-dom'
+import type { AuthUser } from '../../context/AuthContext'
 
 type HeroProps = {
   onLoginClick?: () => void
-  guestName?: string
+  onSignOutClick?: () => void
+  onMyBookingsClick?: () => void
+  user?: AuthUser
 }
 
-function Hero({ onLoginClick, guestName }: HeroProps) {
-  const shortName = guestName?.trim().split(' ')[0]
+function Hero({ onLoginClick, onSignOutClick, onMyBookingsClick, user }: HeroProps) {
+  const shortName = (user?.guest || user?.name || 'Guest').trim().split(' ')[0]
 
   return (
     <section className="hero" id="home">
@@ -28,8 +31,26 @@ function Hero({ onLoginClick, guestName }: HeroProps) {
         </div>
 
         <div className="hero-nav-actions">
-          {shortName ? (
-            <span className="hero-nav-guest">Welcome, {shortName}</span>
+          {user ? (
+            <>
+              <span className="hero-nav-guest">Welcome, {shortName}</span>
+              <button
+                type="button"
+                className="btn btn-secondary hero-nav-bookings"
+                onClick={onMyBookingsClick}
+                aria-label="View my bookings"
+              >
+                My Bookings
+              </button>
+              <button
+                type="button"
+                className="btn btn-ghost hero-nav-signout"
+                onClick={onSignOutClick}
+                aria-label="Sign out"
+              >
+                Sign Out
+              </button>
+            </>
           ) : (
             <button
               type="button"
@@ -55,7 +76,7 @@ function Hero({ onLoginClick, guestName }: HeroProps) {
           <a href="#room-collections" className="btn btn-primary hero-cta">
             Explore Rooms
           </a>
-          {!shortName && (
+          {!user && (
             <button type="button" className="btn btn-ghost hero-cta" onClick={onLoginClick}>
               Create Guest Account
             </button>

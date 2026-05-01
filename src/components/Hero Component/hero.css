@@ -121,6 +121,14 @@
   white-space: nowrap;
 }
 
+.hero-nav-bookings {
+  min-height: 2.25rem;
+}
+
+.hero-nav-signout {
+  min-height: 2.25rem;
+}
+
 .hero-content {
   width: min(1180px, 100%);
   margin: auto auto 0;

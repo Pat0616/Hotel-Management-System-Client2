@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import CalendarComponent from "../../components/Room Calendar Component/CalendarComponent";
 import LoginPopupComponent from "../../components/LoginPopup Component/LoginPopupComponent";
-import { createBooking, getByRoomBooking, getByRoomId } from "../../utils/bookingsAPI";
+import { createBooking, getByRoomBooking, getByRoomId, massUpdateBooking } from "../../utils/bookingsAPI";
 import { getOneRoom } from "../../utils/roomsAPI";
 import { useAuth } from "../../context/AuthContext";
 import { guestLogin, guestRegister } from "../../utils/guestsAPI";
@@ -202,6 +202,8 @@ function RoomCalendarPage() {
 
         setAutoLoginCounter((prev) => prev + 1);
   
+        RefreshBookingsAutomatically();
+        
     },[])
 
     useEffect (()=> {
@@ -318,6 +320,16 @@ const DeleteStoragePastAccount = () =>
   window.location.href="/room/" + id; // Refresh page to reset state after deleting storage
 }
 
+const RefreshBookingsAutomatically = () =>{
+  try{
+    massUpdateBooking();
+    console.log("Bookings auto-refresh triggered");
+  }
+  catch(err)
+  {
+    console.log("Error with auto-refreshing bookings", err);
+  }
+}
 
 
   const roomImage = roomDetails.room_url || "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80";

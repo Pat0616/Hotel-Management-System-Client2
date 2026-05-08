@@ -404,7 +404,7 @@ const RefreshBookingsAutomatically = () =>{
             <div className="booking-details-row">
               <span>Room Rate</span>
               <strong>
-                {roomDetails.room_price ? `$${new Intl.NumberFormat("en-US").format(roomDetails.room_price)} / night` : "Available on checkout"}
+                {roomDetails.room_price ? `₱${new Intl.NumberFormat("en-US").format(roomDetails.room_price)} / night` : "Available on checkout"}
               </strong>
             </div>
           </div>

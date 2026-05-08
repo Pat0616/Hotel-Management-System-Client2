@@ -42,7 +42,7 @@ const RoomCard = ({
 
       <div className="room-card-footer">
         <p className="room-card-price">
-          <strong>${formattedPrice}</strong> / night
+          <strong>₱{formattedPrice}</strong> / night
         </p>
         <Link to={`/room/${roomid}`} className="btn btn-primary room-card-select-btn">
           View Room

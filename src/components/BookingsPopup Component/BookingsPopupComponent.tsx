@@ -13,6 +13,8 @@ interface Booking {
   address: string
   room_title: string
   room_price: number
+  number_of_days: number,
+  total_price: number
 }
 
 interface Props {
@@ -79,8 +81,10 @@ function BookingsPopup({ setBookingsPopupStatus, bookingsPopupStatus }: Props) {
               >
                 <div className='booking-info'>
                   <h3>{booking.room_title}</h3>
-                  <p>${booking.room_price} per night</p>
-                  <span className={`status ${booking.status.toLowerCase()}`}>{booking.status}</span>
+                  <p>₱{booking.room_price} per night</p>
+                  <p>{booking.number_of_days} nights</p>
+                  <p>Total: ₱{booking.total_price}</p>
+                  <span className={`status ₱{booking.status.toLowerCase()}`}>{booking.status}</span>
                 </div>
               </div>
             ))}
@@ -96,32 +100,68 @@ function BookingsPopup({ setBookingsPopupStatus, bookingsPopupStatus }: Props) {
         <div className='bookingdetail-background' onMouseDown={handleDetailClose}>
           <div className='bookingdetail-card' role="dialog" aria-modal="true" onMouseDown={(e) => e.stopPropagation()}>
             <span className='popupcard-headertitle'>Booking Receipt</span>
-            <div className='receipt-details'>
-              <div className='receipt-item'>
-                <strong>Room:</strong> {selectedBooking.room_title}
-              </div>
-              <div className='receipt-item'>
-                <strong>Price:</strong> ${selectedBooking.room_price} per night
-              </div>
-              <div className='receipt-item'>
-                <strong>Check-in Date:</strong> {selectedBooking.check_in_date}
-              </div>
-              <div className='receipt-item'>
-                <strong>Check-out Date:</strong> {selectedBooking.check_out_date}
-              </div>
-              <div className='receipt-item'>
-                <strong>Status:</strong> <span className={`status ${selectedBooking.status.toLowerCase()}`}>{selectedBooking.status}</span>
-              </div>
-              <div className='receipt-item'>
-                <strong>Full Name:</strong> {selectedBooking.fullname}
-              </div>
-              <div className='receipt-item'>
-                <strong>Country:</strong> {selectedBooking.country}
-              </div>
-              <div className='receipt-item'>
-                <strong>Address:</strong> {selectedBooking.address}
-              </div>
+                   <div className='receipt-details'>
+          <div className='receipt-section'>
+            <h4>Booking Info</h4>
+
+            <div className='receipt-row'>
+              <span>Room</span>
+              <strong>{selectedBooking.room_title}</strong>
             </div>
+
+            <div className='receipt-row'>
+              <span>Price</span>
+              <strong>₱{selectedBooking.room_price} / night</strong>
+            </div>
+
+            <div className='receipt-row'>
+              <span>Check-in</span>
+              <strong>{selectedBooking.check_in_date}</strong>
+            </div>
+
+            <div className='receipt-row'>
+              <span>Check-out</span>
+              <strong>{selectedBooking.check_out_date}</strong>
+            </div>
+
+            <div className='receipt-row'>
+              <span>Status</span>
+              <span className={`status ${selectedBooking.status.toLowerCase()}`}>
+                {selectedBooking.status}
+              </span>
+            </div>
+
+            <div className='receipt-row'>
+              <span>Number of Days</span>
+              <strong>{selectedBooking.number_of_days} days</strong>
+            </div>
+
+            <div className='receipt-row'>
+              <span>Total Price</span>
+              <strong>₱{selectedBooking.total_price}</strong>
+            </div>
+
+          </div>
+
+          <div className='receipt-section'>
+            <h4>Guest Info</h4>
+
+            <div className='receipt-row'>
+              <span>Name</span>
+              <strong>{selectedBooking.fullname}</strong>
+            </div>
+
+            <div className='receipt-row'>
+              <span>Country</span>
+              <strong>{selectedBooking.country}</strong>
+            </div>
+
+            <div className='receipt-row'>
+              <span>Address</span>
+              <strong>{selectedBooking.address}</strong>
+            </div>
+          </div>
+        </div>
             <div className='popup-actions'>
               <button onClick={handleDetailClose} className='btn btn-ghost popup-cancelbutton'>Close</button>
             </div>

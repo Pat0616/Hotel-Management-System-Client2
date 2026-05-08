@@ -110,19 +110,42 @@
 }
 
 .receipt-details {
-  margin-bottom: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
-.receipt-item {
-  margin-bottom: 0.75rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.receipt-section {
+  padding: 0.8rem 0.9rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
-.receipt-item strong {
-  color: rgba(248, 244, 235, 0.9);
+.receipt-section h4 {
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 235, 0.6);
 }
 
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.45rem 0;
+  font-size: 0.95rem;
+}
+
+.receipt-row span {
+  color: rgba(248, 244, 235, 0.7);
+}
+
+.receipt-row strong {
+  color: #fff;
+  font-weight: 600;
+}
 .popup-actions {
   display: flex;
   justify-content: flex-end;

@@ -54,6 +54,8 @@ function UpcomingBookingsComponent({
             We’ve reserved everything for a seamless arrival experience.
           </p>
 
+          <p>Contact: +63 991 382 4395</p>
+
 
         </div>
 

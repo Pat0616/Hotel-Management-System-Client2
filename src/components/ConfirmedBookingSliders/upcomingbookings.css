@@ -12,7 +12,7 @@
 .upcoming-stays-layout {
   display: grid;
   grid-template-columns: 1fr 1.6fr;
-  gap: var(--space-10);
+  gap: var(--space-1);
   align-items: start;
 }
 

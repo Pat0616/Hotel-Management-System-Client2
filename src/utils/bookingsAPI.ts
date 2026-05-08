@@ -37,3 +37,9 @@ body: JSON.stringify({}),
 });
 }
 
+export function getConfirmedBookingsByGuest(guestid: number){
+return apiRequest("/api/booking/getconfirmedguest", {
+method: "POST",
+body: JSON.stringify({ guestid }),
+});
+}

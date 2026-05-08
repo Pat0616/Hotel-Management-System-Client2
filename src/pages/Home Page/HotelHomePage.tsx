@@ -8,6 +8,9 @@ import { guestLogin, guestRegister, guestLogout } from '../../utils/guestsAPI'
 import { useAuth } from '../../context/AuthContext'
 import { Link } from 'react-router-dom'
 
+import UpcomingBookingsComponent from '../../components/ConfirmedBookingSliders/UpcomingBookingComponent'
+import { getConfirmedBookingsByGuest, massUpdateBooking } from '../../utils/bookingsAPI'
+
 // const standardRooms = [
 //   {
 //     roomid: 1,
@@ -110,7 +113,7 @@ type RoomCardDetails = {
 
 function HotelHomePage() {
   const { user, setUser } = useAuth()
-  const [roomCardDetailsSamp, setRoomCardDetailsSamp] = useState<RoomCardDetails[]>([])
+  // const [roomCardDetailsSamp, setRoomCardDetailsSamp] = useState<RoomCardDetails[]>([])
 
   const [roomCardSingleBeds, setRoomCardSingleBeds] = useState<RoomCardDetails[]>([])
   const [roomCardDoubleBeds, setRoomCardDoubleBeds] = useState<RoomCardDetails[]>([])
@@ -122,6 +125,36 @@ function HotelHomePage() {
   const [loginError, setLoginError] = useState<string>('')
   const [registerError, setRegisterError] = useState<string>('')
   const [bookingsPopupStatus, setBookingsPopupStatus] = useState<string>('')
+
+  const [confirmedBookings, setConfirmedBookings]= useState([])
+
+useEffect(() => {
+
+  const guestid = user?.guestid
+  if (!guestid) return
+
+  const fetchConfirmedBookings = async () => {
+    try {
+
+      const res =
+        await getConfirmedBookingsByGuest(
+          guestid
+        )
+
+      setConfirmedBookings(res)
+
+    } catch (err) {
+
+      console.log(
+        "Failed to load confirmed bookings"
+      )
+
+    }
+  }
+
+  fetchConfirmedBookings()
+
+}, [user])
 
   const normalizeFeaturedRooms = (rooms: unknown): RoomCardDetails[] => {
     if (!Array.isArray(rooms)) {
@@ -144,6 +177,8 @@ function HotelHomePage() {
   useEffect(() => {
   let isMounted = true;
 
+  updateAllBookings();
+    
   const fetchRooms = async () => {
     try {
       const [single, double, suite, deluxe] = await Promise.all([
@@ -223,6 +258,17 @@ function HotelHomePage() {
     setBookingsPopupStatus('viewing')
   }
 
+  const updateAllBookings  = async () =>
+  {
+    try {
+      await massUpdateBooking();
+    }
+    catch(err)
+    {
+      console.log("Failed to update bookings")
+    }
+  }
+
   const guestFirstName = (user?.guest || user?.name || 'Guest').toString().split(' ')[0]
 
   return (
@@ -257,6 +303,13 @@ function HotelHomePage() {
             </div>
           </div>
         </section>
+      )}
+
+      {user && confirmedBookings.length > 0 && (
+        <UpcomingBookingsComponent
+          bookings={confirmedBookings}
+          onViewBookings={handleMyBookings}
+        />
       )}
 
       <div className="roomselection-container" id="room-collections">

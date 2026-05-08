@@ -1,0 +1,226 @@
+/* components/UpcomingBookings Component/UpcomingBookingsComponent.css */
+
+.upcoming-stays-section {
+  width: min(1180px, 100% - 2rem);
+  margin: 0 auto var(--space-12);
+}
+
+.upcoming-stays-header {
+  margin-bottom: var(--space-6);
+}
+
+.upcoming-stays-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--color-primary-900);
+  margin-bottom: var(--space-3);
+}
+
+.upcoming-stays-header p {
+  max-width: 52ch;
+  color: var(--color-text-700);
+  line-height: 1.7;
+}
+
+.upcoming-stays-slider {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(340px, 420px);
+
+  gap: var(--space-5);
+
+  overflow-x: auto;
+
+  padding-bottom: var(--space-4);
+
+  scroll-snap-type: x mandatory;
+}
+
+.upcoming-stays-slider::-webkit-scrollbar {
+  height: 6px;
+}
+
+.upcoming-stays-slider::-webkit-scrollbar-thumb {
+  background: rgba(26, 45, 68, 0.3);
+  border-radius: var(--radius-pill);
+}
+
+.upcoming-booking-card {
+  position: relative;
+
+  overflow: hidden;
+
+  border-radius: var(--radius-xl);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(16, 32, 54, 0.98),
+      rgba(24, 45, 70, 0.94)
+    );
+
+  border: 1px solid rgba(174, 143, 81, 0.22);
+
+  box-shadow: var(--shadow-mid);
+
+  color: var(--color-text-on-dark);
+
+  scroll-snap-align: start;
+
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.upcoming-booking-card:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(216, 188, 134, 0.48);
+
+  box-shadow: var(--shadow-strong);
+}
+
+.upcoming-booking-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(216, 188, 134, 0.16),
+      transparent 40%
+    );
+
+  pointer-events: none;
+}
+
+.upcoming-booking-content {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: var(--space-5);
+
+  padding: var(--space-6);
+}
+
+.upcoming-booking-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upcoming-booking-status {
+  display: inline-flex;
+
+  padding: 0.38rem 0.8rem;
+
+  border-radius: var(--radius-pill);
+
+  background: rgba(255, 255, 255, 0.12);
+
+  color: var(--color-accent-200);
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.upcoming-booking-price {
+  font-size: 1rem;
+  font-weight: 800;
+
+  color: var(--color-accent-200);
+}
+
+.upcoming-booking-card h3 {
+  font-family: var(--font-display);
+
+  font-size: 2rem;
+  line-height: 1;
+
+  color: var(--color-text-on-dark);
+}
+
+.upcoming-booking-dates {
+  display: flex;
+  justify-content: space-between;
+
+  gap: var(--space-4);
+}
+
+.upcoming-booking-dates div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.upcoming-booking-dates span {
+  font-size: 0.78rem;
+  color: rgba(248, 244, 235, 0.7);
+}
+
+.upcoming-booking-dates strong {
+  font-size: 1rem;
+  color: var(--color-text-on-dark);
+}
+
+.upcoming-booking-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.upcoming-booking-chip {
+  display: inline-flex;
+
+  padding: 0.42rem 0.82rem;
+
+  border-radius: var(--radius-pill);
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  font-size: 0.76rem;
+  font-weight: 700;
+
+  color: rgba(248, 244, 235, 0.88);
+}
+
+.upcoming-booking-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: var(--space-4);
+}
+
+.upcoming-booking-countdown {
+  color: var(--color-accent-200);
+
+  font-weight: 700;
+
+  font-size: 0.92rem;
+}
+
+@media (max-width: 768px) {
+
+  .upcoming-booking-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .upcoming-booking-card h3 {
+    font-size: 1.7rem;
+  }
+
+  .upcoming-stays-slider {
+    grid-auto-columns: 90%;
+  }
+
+}

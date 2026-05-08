@@ -30,117 +30,123 @@ function UpcomingBookingsComponent({
     const today = new Date()
     const checkIn = new Date(checkInDate)
 
-    const diff =
-      checkIn.getTime() - today.getTime()
+    const diff = checkIn.getTime() - today.getTime()
 
-    return Math.ceil(
-      diff / (1000 * 60 * 60 * 24)
-    )
+    return Math.ceil(diff / (1000 * 60 * 60 * 24))
   }
 
   return (
     <section className="upcoming-stays-section">
 
-      <div className="upcoming-stays-header">
-        <span className="collections-label">
-          Upcoming Stay
-        </span>
+      <div className="upcoming-stays-layout">
 
-        <h2>Your confirmed reservations</h2>
+        {/* LEFT INFO PANEL */}
+        <div className="upcoming-stays-info">
 
-        <p>
-          Everything is ready for your upcoming experience.
-          Review your confirmed stays and prepare for check-in.
-        </p>
-      </div>
+          <span className="collections-label">
+            Upcoming Stay
+          </span>
 
-      <div className="upcoming-stays-slider">
+          <h2>Your confirmed reservations</h2>
 
-        {bookings.map((booking, index) => {
+          <p>
+            Your journey is already prepared in advance.
+            We’ve reserved everything for a seamless arrival experience.
+          </p>
 
-          const daysLeft =
-            calculateDaysLeft(booking.check_in_date)
 
-          return (
-            <article
-              className="upcoming-booking-card"
-              key={index}
-            >
+        </div>
 
-              <div className="upcoming-booking-overlay" />
+        {/* RIGHT BOOKINGS */}
+        <div className="upcoming-stays-slider">
 
-              <div className="upcoming-booking-content">
+          {bookings.map((booking, index) => {
 
-                <div className="upcoming-booking-top">
+            const daysLeft =
+              calculateDaysLeft(booking.check_in_date)
 
-                  <span className="upcoming-booking-status">
-                    Confirmed
-                  </span>
+            return (
+              <article
+                className="upcoming-booking-card"
+                key={index}
+              >
 
-                  <span className="upcoming-booking-price">
-                    ₱{booking.total_price.toLocaleString()}
-                  </span>
+                <div className="upcoming-booking-overlay" />
 
-                </div>
+                <div className="upcoming-booking-content">
 
-                <h3>
-                  {booking.room_title}
-                </h3>
+                  <div className="upcoming-booking-top">
 
-                <div className="upcoming-booking-dates">
+                    <span className="upcoming-booking-status">
+                      Confirmed
+                    </span>
 
-                  <div>
-                    <span>Check-in</span>
-                    <strong>
-                      {booking.check_in_date}
-                    </strong>
+                    <span className="upcoming-booking-price">
+                      ₱{booking.total_price.toLocaleString()}
+                    </span>
+
                   </div>
 
-                  <div>
-                    <span>Check-out</span>
-                    <strong>
-                      {booking.check_out_date}
-                    </strong>
+                  <h3>
+                    {booking.room_title}
+                  </h3>
+
+                  <div className="upcoming-booking-dates">
+
+                    <div>
+                      <span>Check-in</span>
+                      <strong>
+                        {booking.check_in_date}
+                      </strong>
+                    </div>
+
+                    <div>
+                      <span>Check-out</span>
+                      <strong>
+                        {booking.check_out_date}
+                      </strong>
+                    </div>
+
+                  </div>
+
+                  <div className="upcoming-booking-meta">
+
+                    <span className="upcoming-booking-chip">
+                      {booking.number_of_days} Nights
+                    </span>
+
+                    <span className="upcoming-booking-chip">
+                      Premium Preparation Ready
+                    </span>
+
+                  </div>
+
+                  <div className="upcoming-booking-footer">
+
+                    <p className="upcoming-booking-countdown">
+
+                      {daysLeft > 0
+                        ? `Check-in in ${daysLeft} day${daysLeft > 1 ? 's' : ''}`
+                        : 'Check-in available today'}
+
+                    </p>
+
+                    <button
+                      className="btn btn-primary"
+                      onClick={onViewBookings}
+                    >
+                      View Booking
+                    </button>
+
                   </div>
 
                 </div>
 
-                <div className="upcoming-booking-meta">
+              </article>
+            )
+          })}
 
-                  <span className="upcoming-booking-chip">
-                    {booking.number_of_days} Nights
-                  </span>
-
-                  <span className="upcoming-booking-chip">
-                    Ready for arrival
-                  </span>
-
-                </div>
-
-                <div className="upcoming-booking-footer">
-
-                  <p className="upcoming-booking-countdown">
-
-                    {daysLeft > 0
-                      ? `Check-in in ${daysLeft} day${daysLeft > 1 ? 's' : ''}`
-                      : 'Check-in available today'}
-
-                  </p>
-
-                  <button
-                    className="btn btn-primary"
-                    onClick={onViewBookings}
-                  >
-                    View Booking
-                  </button>
-
-                </div>
-
-              </div>
-
-            </article>
-          )
-        })}
+        </div>
 
       </div>
 

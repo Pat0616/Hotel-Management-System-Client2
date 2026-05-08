@@ -5,27 +5,88 @@
   margin: 0 auto var(--space-12);
 }
 
-.upcoming-stays-header {
-  margin-bottom: var(--space-6);
+/* ========================= */
+/* NEW LAYOUT (DESKTOP SPLIT)
+/* ========================= */
+
+.upcoming-stays-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: var(--space-10);
+  align-items: start;
 }
 
-.upcoming-stays-header h2 {
+/* LEFT INFO PANEL */
+
+.upcoming-stays-info {
+  top: 100px;
+}
+
+.upcoming-stays-info h2 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-size: clamp(2rem, 3.5vw, 2.6rem);
   color: var(--color-primary-900);
   margin-bottom: var(--space-3);
 }
 
-.upcoming-stays-header p {
+.upcoming-stays-info p {
   max-width: 52ch;
   color: var(--color-text-700);
   line-height: 1.7;
+  margin-bottom: var(--space-6);
 }
+
+/* INFO CARD */
+
+.upcoming-info-card {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid var(--color-outline);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px);
+}
+
+.upcoming-info-card h4 {
+  font-family: var(--font-display);
+  color: var(--color-primary-900);
+  margin-bottom: var(--space-4);
+}
+
+.info-row {
+  margin-bottom: var(--space-4);
+}
+
+.info-row span {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-text-500);
+  margin-bottom: 0.25rem;
+}
+
+.info-row p {
+  font-size: 0.95rem;
+  color: var(--color-text-900);
+  margin: 0;
+}
+
+.info-note {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-outline);
+  font-size: 0.82rem;
+  color: var(--color-text-500);
+  line-height: 1.6;
+}
+
+/* ========================= */
+/* MULTIPLE BOOKINGS (SLIDER)
+/* ========================= */
 
 .upcoming-stays-slider {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(340px, 420px);
+  grid-auto-columns: minmax(320px, 1fr);
 
   gap: var(--space-5);
 
@@ -37,6 +98,7 @@
 }
 
 .upcoming-stays-slider::-webkit-scrollbar {
+  position: sticky;
   height: 6px;
 }
 
@@ -44,6 +106,79 @@
   background: rgba(26, 45, 68, 0.3);
   border-radius: var(--radius-pill);
 }
+
+/* ========================= */
+/* SINGLE BOOKING (HERO MODE)
+/* ========================= */
+
+.upcoming-stays-single {
+  display: flex;
+  justify-content: center;
+}
+
+.upcoming-stays-single .upcoming-booking-card {
+  width: min(820px, 100%);
+
+  min-height: 340px;
+
+  display: flex;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(16, 32, 54, 0.98),
+      rgba(24, 45, 70, 0.94)
+    );
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.upcoming-stays-single .upcoming-booking-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: -140px;
+  right: -140px;
+
+  width: 360px;
+  height: 360px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(216, 188, 134, 0.18),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+.upcoming-stays-single .upcoming-booking-content {
+  width: 100%;
+
+  padding: clamp(2rem, 4vw, 3.2rem);
+
+  gap: var(--space-6);
+}
+
+.upcoming-stays-single .upcoming-booking-card h3 {
+  font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.upcoming-stays-single .upcoming-booking-countdown {
+  font-size: 1.05rem;
+}
+
+/* ========================= */
+/* BOOKING CARD (BASE STYLE)
+/* ========================= */
 
 .upcoming-booking-card {
   position: relative;
@@ -81,6 +216,8 @@
   box-shadow: var(--shadow-strong);
 }
 
+/* overlay */
+
 .upcoming-booking-overlay {
   position: absolute;
   inset: 0;
@@ -95,6 +232,8 @@
   pointer-events: none;
 }
 
+/* content */
+
 .upcoming-booking-content {
   position: relative;
 
@@ -105,6 +244,8 @@
 
   padding: var(--space-6);
 }
+
+/* top */
 
 .upcoming-booking-top {
   display: flex;
@@ -137,14 +278,19 @@
   color: var(--color-accent-200);
 }
 
+/* title */
+
 .upcoming-booking-card h3 {
   font-family: var(--font-display);
 
   font-size: 2rem;
+
   line-height: 1;
 
   color: var(--color-text-on-dark);
 }
+
+/* dates */
 
 .upcoming-booking-dates {
   display: flex;
@@ -169,6 +315,8 @@
   color: var(--color-text-on-dark);
 }
 
+/* chips */
+
 .upcoming-booking-meta {
   display: flex;
   flex-wrap: wrap;
@@ -192,6 +340,8 @@
   color: rgba(248, 244, 235, 0.88);
 }
 
+/* footer */
+
 .upcoming-booking-footer {
   display: flex;
   justify-content: space-between;
@@ -208,7 +358,24 @@
   font-size: 0.92rem;
 }
 
+/* ========================= */
+/* MOBILE
+/* ========================= */
+
+@media (max-width: 900px) {
+  .upcoming-stays-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .upcoming-stays-info {
+    position: static;
+  }
+}
+
 @media (max-width: 768px) {
+  .upcoming-stays-slider {
+    grid-auto-columns: 90%;
+  }
 
   .upcoming-booking-footer {
     flex-direction: column;
@@ -218,9 +385,4 @@
   .upcoming-booking-card h3 {
     font-size: 1.7rem;
   }
-
-  .upcoming-stays-slider {
-    grid-auto-columns: 90%;
-  }
-
 }

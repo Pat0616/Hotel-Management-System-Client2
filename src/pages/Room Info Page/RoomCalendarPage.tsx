@@ -198,7 +198,7 @@ function RoomCalendarPage() {
 
  useEffect (() => 
     {
-        TryLoginPastAccount();
+        
 
         setAutoLoginCounter((prev) => prev + 1);
   
@@ -288,29 +288,29 @@ function RoomCalendarPage() {
     }
   };
 
-  const TryLoginPastAccount = async() =>
-{
-  try{
-      const remuser = localStorage.getItem("GuestUsername");
-      const rempass = localStorage.getItem("GuestPassword");
+//   const TryLoginPastAccount = async() =>
+// {
+//   try{
+//       const remuser = localStorage.getItem("GuestUsername");
+//       const rempass = localStorage.getItem("GuestPassword");
 
-    if(remuser && rempass)
-    {
-      const email = JSON.parse(remuser);
-      const password = JSON.parse(rempass);
-      const res = await guestLogin(email, password);
-      setUser(res);
-      console.log("Auto-login result", res);
-    }
+//     if(remuser && rempass)
+//     {
+//       const email = JSON.parse(remuser);
+//       const password = JSON.parse(rempass);
+//       const res = await guestLogin(email, password);
+//       setUser(res);
+//       console.log("Auto-login result", res);
+//     }
 
    
-  }
-  catch(err)
-  {
-    console.log("Error with past account login", err);
-  }
+//   }
+//   catch(err)
+//   {
+//     console.log("Error with past account login", err);
+//   }
     
-}
+// }
 
 const DeleteStoragePastAccount = () =>
 {

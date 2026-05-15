@@ -49,8 +49,8 @@ const handleBookingDetails = () => {
                     <span className='popupcard-headertitle'>Welcome Back</span>
                     <p className='popupcard-subtitle'>Sign in to continue your reservation journey.</p>
                     <div className='popup-form-group'>
-                      <label className='popup-form-label' htmlFor='login-email'>Email</label>
-                      <input id='login-email' type='email' className='popup-form-input' placeholder='you@example.com' onChange={(e) => setLoginEmail(e.target.value)} />
+                      <label className='popup-form-label' htmlFor='login-email'>User </label>
+                      <input id='login-email' type='' className='popup-form-input' placeholder='' onChange={(e) => setLoginEmail(e.target.value)} />
                     </div>
                     <div className='popup-form-group'>
                       <label className='popup-form-label' htmlFor='login-password'>Password</label>
